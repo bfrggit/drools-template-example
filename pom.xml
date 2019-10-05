@@ -6,7 +6,7 @@
    <groupId>com.rhc.drools</groupId>
    <artifactId>template-example</artifactId>
    <packaging>jar</packaging>
-   <version>0.1.1-SNAPSHOT</version>
+   <version>0.1.2-SNAPSHOT</version>
 
    <name>Template Example</name>
 
@@ -14,7 +14,6 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <java.version>1.8</java.version>
       <kie.version>7.27.0.Final</kie.version>
-      <slf4j.version>1.7.2</slf4j.version>
       <logback.version>1.2.3</logback.version>
       <junit.jupiter.version>5.5.2</junit.jupiter.version>
    </properties>
