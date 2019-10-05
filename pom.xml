@@ -15,8 +15,8 @@
       <java.version>1.8</java.version>
       <kie.version>7.27.0.Final</kie.version>
       <slf4j.version>1.7.2</slf4j.version>
-      <junit.version>4.11</junit.version>
       <logback.version>1.2.3</logback.version>
+      <junit.jupiter.version>5.5.2</junit.jupiter.version>
    </properties>
 
    <dependencyManagement>
@@ -58,14 +58,69 @@
          <version>${kie.version}</version>
       </dependency>
       <dependency>
-         <groupId>junit</groupId>
-         <artifactId>junit</artifactId>
-         <version>${junit.version}</version>
-      </dependency>
-      <dependency>
          <groupId>ch.qos.logback</groupId>
          <artifactId>logback-classic</artifactId>
          <version>${logback.version}</version>
       </dependency>
+      <dependency>
+         <groupId>org.junit.jupiter</groupId>
+         <artifactId>junit-jupiter</artifactId>
+         <version>${junit.jupiter.version}</version>
+         <scope>test</scope>
+      </dependency>
    </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.2</version>
+            <dependencies>
+               <dependency>
+                  <groupId>org.junit.jupiter</groupId>
+                  <artifactId>junit-jupiter-engine</artifactId>
+                  <version>${junit.jupiter.version}</version>
+               </dependency>
+            </dependencies>
+            <configuration>
+               <excludes>
+                  <exclude>**/*IntegrationTest.java</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>2.22.2</version>
+            <configuration>
+               <parallel>classesAndMethods</parallel>
+               <perCoreThreadCount>true</perCoreThreadCount>
+               <useUnlimitedThreads>true</useUnlimitedThreads>
+               <excludes>
+                  <exclude>none</exclude>
+               </excludes>
+               <includes>
+                  <include>**/*IntegrationTest.java</include>
+               </includes>
+               <additionalClasspathElements>
+                  <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+               </additionalClasspathElements>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>integration-test</id>
+                  <goals>
+                     <goal>integration-test</goal>
+                     <goal>verify</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
 </project>

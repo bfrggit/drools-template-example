@@ -1,8 +1,9 @@
 package com.rhc.drools.build;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -15,22 +16,34 @@ public class TestLoanMaxAmount {
    private KieContainer kieContainer;
    private KieBase kieBase;
 
-   @Before
+   @BeforeEach
    public void init() {
       kieContainer = KieServices.Factory.get().getKieClasspathContainer();
-      kieBase = kieContainer.getKieBase(KIE_BASE);
+      try {
+         kieBase = kieContainer.getKieBase(KIE_BASE);
+      } catch (NullPointerException e) {
+         e.printStackTrace();
+         throw e;
+      }
    }
 
    @Test
    public void testSimpleLoan() {
       Loan loan = new Loan();
       loan.setIdentifier("simple");
-      KieSession kieSession = kieBase.newKieSession();
+      KieSession kieSession;
+
+      try {
+         kieSession = kieBase.newKieSession();
+      } catch (NullPointerException e) {
+         e.printStackTrace();
+         throw e;
+      }
 
       kieSession.insert(loan);
       kieSession.fireAllRules();
 
-      Assert.assertEquals((Integer) 1000, loan.getMaxAmount());
+      assertEquals((Integer) 1000, loan.getMaxAmount());
    }
 
    @Test
@@ -42,6 +55,6 @@ public class TestLoanMaxAmount {
       kieSession.insert(loan);
       kieSession.fireAllRules();
 
-      Assert.assertEquals((Integer) 5000, loan.getMaxAmount());
+      assertEquals((Integer) 5000, loan.getMaxAmount());
    }
 }
