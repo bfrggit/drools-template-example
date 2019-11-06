@@ -1,4 +1,4 @@
-#Drools Template Example
+# Drools Template Example
 
 Drools templates are used to provide a complex rule structure and fill in parameterized values with data. This allows separation between rule structure and data for data-driven rule sets. For example, one might want to set a maximum amount for a Loan that is dependent on the type of loan. The rules would look like such:
 
@@ -52,6 +52,6 @@ This project contains a working drools template. Use maven to verify the functio
 mvn clean test
 ```
 
-##Requirements
+## Requirements
 
 This project has a dependency on version `6.3.0.Final-redhat-5` of Drools which is provided as BxMS v6.2. You can download the maven repository at the [Red Hat Customer Portal](https://access.redhat.com)
